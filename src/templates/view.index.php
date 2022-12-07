@@ -23,6 +23,10 @@ else {
   include 'templates/view.index.topbar.php';
 } ?>
 
+<br>
+<center><strong>The following file extensions are currently indexed: .pdf, .doc, .docx, .ppt, .pptx</strong></center>
+<br>
+
 <div class="row">
   <div id="searchform-wrapper" class="small-12 medium-8 large-9 columns">
     <?php

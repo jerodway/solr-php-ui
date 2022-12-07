@@ -666,14 +666,15 @@ if ($view == 'rss') {
     $sort = 'newest';
 }
 
+
+
+include 'config/config.facets.php';
+
 if ($cfg['etl_status']) {
 
 	$cfg['facets']['etl_error_plugins_ss'] = array ('label'=>'Failed tasks while import & analysis (ETL)');
 
 }
-
-include 'config/config.facets.php';
-
 
 // get parameters for each configurated facet
 $selected_facets = array();
