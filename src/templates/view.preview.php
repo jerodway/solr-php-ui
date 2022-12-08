@@ -65,7 +65,16 @@ foreach ($results->response->docs as $doc) {
 $id = $doc->id;
 
 $container = isset($doc->container_s) ? $doc->container_s : NULL;
-list ($url_display, $url_display_basename, $url_preview, $url_openfile, $url_annotation, $url_container_display, $url_container_display_basenname) = get_urls($doc->id, $container);
+list ($url_display_orig, $url_display_basename_orig, $url_preview_orig, $url_openfile_orig, $url_annotation_orig, $url_container_display_orig, $url_container_display_basename_orig) = get_urls($doc->id, $container);
+list ($url_display, $url_display_basename, $url_preview, $url_openfile, $url_annotation, $url_container_display, $url_container_display_basename) = get_urls($doc->serve_id_s, $container);
+
+$url_display = !empty($url_display) ? $url_display : $url_display_orig;
+$url_display_basename = !empty($url_display_basename) ? $url_display_basename : $url_display_basename_orig;
+$url_preview = !empty($url_preview) ? $url_preview : $url_preview_orig;
+$url_openfile = !empty($url_openfile) ? $url_openfile : $url_openfile_orig;
+$url_annotation = !empty($url_annotation) ? $url_annotation : $url_annotation_orig;
+$url_container_display = !empty($url_container_display) ? $url_container_display : $url_container_display_orig;
+$url_container_display_basename = !empty($url_container_display_basename) ? $url_container_display_basename : $url_container_display_basename_orig;
 
 // Type
 $type = $doc->content_type_ss;

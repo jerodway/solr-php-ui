@@ -31,11 +31,11 @@ $cfg['facets']['hashtag_ss'] = array ('label'=>'Hashtags', 'facet_limit'=>'10', 
 
 $cfg['facets']['email_domain_ss'] = array ('label'=>'Email domain', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'None', 'tree'=>false, 'enabled'=>true, 'closed'=>false, 'snippets_enabled'=>true, 'graph_enabled'=>false);
 
-$cfg['facets']['phone_normalized_ss'] = array ('label'=>'Phone numbers', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'None', 'tree'=>false, 'enabled'=>true, 'closed'=>false, 'snippets_enabled'=>false, 'graph_enabled'=>false);
+//$cfg['facets']['phone_normalized_ss'] = array ('label'=>'Phone numbers', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'None', 'tree'=>false, 'enabled'=>true, 'closed'=>false, 'snippets_enabled'=>false, 'graph_enabled'=>false);
 
-$cfg['facets']['phone_ss'] = array ('label'=>'Phone numbers', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'None', 'tree'=>false, 'enabled'=>false, 'closed'=>false, 'snippets_enabled'=>true, 'graph_enabled'=>false);
+//$cfg['facets']['phone_ss'] = array ('label'=>'Phone numbers', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'None', 'tree'=>false, 'enabled'=>false, 'closed'=>false, 'snippets_enabled'=>true, 'graph_enabled'=>false);
 
-$cfg['facets']['money_ss'] = array ('label'=>'Money', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'50', 'tree'=>false, 'enabled'=>true, 'closed'=>false, 'snippets_enabled'=>true, 'graph_enabled'=>false);
+//$cfg['facets']['money_ss'] = array ('label'=>'Money', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'50', 'tree'=>false, 'enabled'=>true, 'closed'=>false, 'snippets_enabled'=>true, 'graph_enabled'=>false);
 
 $cfg['facets']['content_type_group_ss'] = array ('label'=>'Content type group', 'facet_limit'=>'10', 'snippets_limit'=>'10', 'graph_limit'=>'50', 'tree'=>false, 'enabled'=>true, 'closed'=>false, 'snippets_enabled'=>false, 'graph_enabled'=>false);
 
