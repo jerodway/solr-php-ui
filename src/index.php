@@ -954,7 +954,7 @@ if (!$query) {
 * table view (where we want to see all fields)
 */
 if ($view != 'table' && $view != 'preview') {
-	$additionalParameters['fl']='id,content_type_ss,title_txt,container_s,author_ss,file_modified_dt,last_modified_dt,Content-Length_i,location_p,serve_id_s';
+	$additionalParameters['fl']='id,content_type_ss,title_txt,container_s,author_ss,file_modified_dt,last_modified_dt,Content-Length_i,location_p,serve_id_s,orig_filepath_s';
 
 	if ($cfg['etl_status']) {
 		$additionalParameters['fl']=$additionalParameters['fl'] . ',etl_file_b,etl_enhance_extract_text_tika_server_b';

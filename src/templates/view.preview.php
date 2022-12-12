@@ -76,8 +76,13 @@ $url_annotation = !empty($url_annotation) ? $url_annotation : $url_annotation_or
 $url_container_display = !empty($url_container_display) ? $url_container_display : $url_container_display_orig;
 $url_container_display_basename = !empty($url_container_display_basename) ? $url_container_display_basename : $url_container_display_basename_orig;
 
+$url_extra_preview = $url_openfile;
+
 // Type
 $type = $doc->content_type_ss;
+
+
+
 
 // If multiple types (because recursive content extraction like archives or PDF with embedded images), use the type of the file, only
 if (is_array($type)) {
@@ -88,6 +93,42 @@ if (isset($doc->content_type_group_ss)) {
     $type_group = $doc->content_type_group_ss;
 } else $type_group = false;
 
+if (is_array($type_group)){
+    $first_type_group = $type_group[0];
+}
+
+if (isset($doc->orig_filepath_s)) {
+	$pdf_serve_flag = true;
+}
+else {
+	$pdf_serve_flag = false;
+}	
+
+if (isset($first_type_group) && $first_type_group == "Presentation" && $pdf_serve_flag) {
+     
+	 if (function_exists('curl_file_create')) {
+		 $cFile = curl_file_create($doc->orig_filepath_s);
+	 } else {
+		 $cFile = '@' . realpath($doc->orig_filepath_s);
+	 }
+	 
+	 $post = array('file'=>$cFile);
+	 $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, "http://pdfapp:5000/");
+     //curl_setopt($ch, CURLOPT_HEADER, false);
+	 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	 curl_setopt($ch, CURLOPT_POST, true);
+
+	 curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+     $response = curl_exec($ch);
+     $response = json_decode($response, true);
+
+     $url_extra_preview = $response['text'];
+     $pdf_serve_flag = $response['good_flag'];
+	 curl_close($ch);
+
+}
 
 // Authors
 
@@ -318,7 +359,7 @@ $fields = get_fields($doc, $exclude_fields, $exclude_fields_prefixes, $exclude_f
         <li class="tabs-title is-active"><a href="#preview-content"
                                             aria-selected="true"><?= t('Content') ?></a></li>
 
-      <?php if ($type=='application/pdf') { // if pdf ?>
+      <?php if ($type=='application/pdf' || ($first_type_group == "Presentation" && $pdf_serve_flag)) { // if pdf ?>
         <li class="tabs-title"><a href="#preview-plaintext"><?= t('Plain text') ?></a></li>
       <?php } // if pdf ?>
 
@@ -352,7 +393,7 @@ $fields = get_fields($doc, $exclude_fields, $exclude_fields_prefixes, $exclude_f
           if ($preview_allowed) {
 
             // if PDF
-            if (strpos($type, 'application/pdf') === 0) { 
+            if ((strpos($type, 'application/pdf') === 0) || ($first_type_group == "Presentation" && $pdf_serve_flag)) { 
 
 
 if ($preview_segments == true) {
@@ -434,7 +475,7 @@ if ($preview_segments == true) {
 					<?php
 					} else { // no thumbnails
 					?>
-						<embed id="pdf" src="<?= $url_openfile ?>#search=<?= rawurlencode($highlightings) ?>" type="application/pdf" width="100%" height="100%" />
+						<embed id="pdf" src="<?= $url_extra_preview ?>#search=<?= rawurlencode($highlightings) ?>" type="application/pdf" width="100%" height="100%" />
 
               	<?php
               } // no thumbnails
@@ -504,7 +545,7 @@ if ($preview_segments == true) {
             } // if knowledge graph or csv row
 
 				// not pdf, since pdf text previous shown by pdf viewer
-				if ($type != 'application/pdf') {
+				if ($type != 'application/pdf' && !($first_type_group == "Presentation" && $pdf_serve_flag)) {
 
             ?>
 				
@@ -530,7 +571,7 @@ if ($preview_segments == true) {
       </div>
 
 
-      <?php if ($type=='application/pdf' && $preview_allowed) { // if pdf ?>
+      <?php if (($type=='application/pdf'  || ($first_type_group == "Presentation" && $pdf_serve_flag)) && $preview_allowed) { // if pdf ?>
         <div class="tabs-panel" id="preview-plaintext">
 
           <div id="plaintext">
