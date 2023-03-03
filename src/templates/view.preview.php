@@ -111,8 +111,21 @@ if (isset($first_type_group) && $first_type_group == "Presentation" && $pdf_serv
 	 } else {
 		 $cFile = '@' . realpath($doc->orig_filepath_s);
 	 }
-	 
-	 $post = array('file'=>$cFile);
+
+	 if (isset($doc->file_modified_dt)) {
+        $datetime = $doc->file_modified_dt;
+    }
+    elseif (isset($doc->last_modified)) {
+        $datetime = $doc->last_modified;
+    }
+
+	if (isset($datetime)) {
+	    $post = array('last_modified'=>$datetime, 'file'=>$cFile);
+	} else {
+	    $post = array('file'=>$cFile);
+	}
+
+
 	 $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, "http://pdfapp:5000/");
      //curl_setopt($ch, CURLOPT_HEADER, false);
