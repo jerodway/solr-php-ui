@@ -488,8 +488,8 @@ if ($preview_segments == true) {
 					<?php
 					} else { // no thumbnails
 					?>
-						<embed id="pdf" src="<?= $url_extra_preview ?>#search=<?= rawurlencode($highlightings) ?>" type="application/pdf" width="100%" height="100%" />
-
+						<!-- embed id="pdf" src="<?= $url_extra_preview ?>#search=<?= rawurlencode($highlightings) ?>" type="application/pdf" width="100%" height="100%" -->
+                        <iframe src='pdfjs/generic/web/viewer.html?file=<?=$url_extra_preview ?>#search=<?= rawurlencode($highlightings)?>' width="100%" height="100%"></iframe>
               	<?php
               } // no thumbnails
             } // if PDF
